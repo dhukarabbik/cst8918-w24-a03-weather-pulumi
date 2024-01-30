@@ -5,4 +5,4 @@ config:
   cst8918-a03-infra:publicPort: '80'
   cst8918-a03-infra:cpu: '1'
   cst8918-a03-infra:memory: '2'
-  cst8918-a03-infra:prefixName: 'cst8918a03dhuk0001'
+  cst8918-a03-infra:prefixName: 'cst8918a03pate0590'
