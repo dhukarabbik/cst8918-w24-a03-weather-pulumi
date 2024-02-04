@@ -1,13 +1,13 @@
-import * as pulumi from "@pulumi/pulumi";
+import * as pulumi from '@pulumi/pulumi'
 import * as resources from '@pulumi/azure-native/resources'
 import * as containerregistry from '@pulumi/azure-native/containerregistry'
-import * as containerinstance from '@pulumi/azure-native/containerinstance'
 import * as docker from '@pulumi/docker'
+import * as containerinstance from '@pulumi/azure-native/containerinstance'
 
 // Import the configuration settings for the current stack.
 const config = new pulumi.Config()
 const appPath = config.get('appPath') || '../'
-const prefixName = config.get('prefixName') || 'cst8918a03pate0590'
+const prefixName = config.get('prefixName') || 'cst8918-a03-student'
 const imageName = prefixName
 const imageTag = config.get('imageTag') || 'latest'
 // Azure container instances (ACI) service does not yet support port mapping
@@ -18,10 +18,10 @@ const cpu = config.getNumber('cpu') || 1
 const memory = config.getNumber('memory') || 2
 
 // Create a resource group.
-const resourceGroup = new resources.ResourceGroup(${prefixName}-rg)
+const resourceGroup = new resources.ResourceGroup(`${prefixName}-rg`)
 
 // Create the container registry.
-const registry = new containerregistry.Registry(${prefixName}ACR, {
+const registry = new containerregistry.Registry(`${prefixName}ACR`, {
   resourceGroupName: resourceGroup.name,
   adminUserEnabled: true,
   sku: {
@@ -43,7 +43,7 @@ const registryCredentials = containerregistry
   })
 
 // Define the container image for the service.
-const image = new docker.Image(${prefixName}-image, {
+const image = new docker.Image(`${prefixName}-image`, {
   imageName: pulumi.interpolate`${registry.loginServer}/${imageName}:${imageTag}`,
   build: {
     context: appPath,
@@ -56,12 +56,9 @@ const image = new docker.Image(${prefixName}-image, {
   }
 })
 
-
-
-
 // Create a container group in the Azure Container App service and make it publicly accessible.
 const containerGroup = new containerinstance.ContainerGroup(
-  ${prefixName}-container-group,
+  `${prefixName}-container-group`,
   {
     resourceGroupName: resourceGroup.name,
     osType: 'linux',
@@ -103,7 +100,7 @@ const containerGroup = new containerinstance.ContainerGroup(
     ],
     ipAddress: {
       type: containerinstance.ContainerGroupIpAddressType.Public,
-      dnsNameLabel: ${imageName},
+      dnsNameLabel: `${imageName}`,
       ports: [
         {
           port: publicPort,
@@ -114,10 +111,9 @@ const containerGroup = new containerinstance.ContainerGroup(
   }
 )
 
-
 // Export the service's IP address, hostname, and fully-qualified URL.
 export const hostname = containerGroup.ipAddress.apply(addr => addr!.fqdn!)
 export const ip = containerGroup.ipAddress.apply(addr => addr!.ip!)
 export const url = containerGroup.ipAddress.apply(
-  addr => http://${addr!.fqdn!}:${containerPort}
+  addr => `http://${addr!.fqdn!}:${containerPort}`
 )
