@@ -7,3 +7,5 @@ config:
   cst8918-a03-infra:memory: '2'
   cst8918-a03-infra:prefixName: 'cst8918a03dhuk0001'
   cst8918-a03-infra:publicPort: '80'
+  cst8918-a03-infra:weatherApiKey:
+    secure: AAABAM9pDGX3RwK0gO9uUnq6iHa4e3nMHcujiqr9zoxb1XfQZAdD1iJnHUhvQFY61kSkF4oA6Djbwb3tU49flg==
