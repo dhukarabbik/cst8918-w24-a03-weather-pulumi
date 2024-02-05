@@ -8,4 +8,4 @@ config:
   cst8918-a03-infra:prefixName: 'cst8918a03pate0590'
   cst8918-a03-infra:publicPort: '80'
   cst8918-a03-infra:weatherApiKey:
-    secure: AAABAM9pDGX3RwK0gO9uUnq6iHa4e3nMHcujiqr9zoxb1XfQZAdD1iJnHUhvQFY61kSkF4oA6Djbwb3tU49flg==
+    secure: AAABAOPOQDWF72cEI1vinl16HbdLJOtabm4BHV4sw2rn5O/2C2bOHJtmUdo9b6oZEjRMdjeynmIa2OWl4y7s
